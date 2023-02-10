@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comic {
+  id       Int       @id @default(autoincrement())
+  title    String
+  slug     String    @unique
+  releases Release[]
+}
+
+model Release {
+  id      Int    @id @default(autoincrement())
+  title   String
+  comicId Int
+  comic   Comic  @relation(fields: [comicId], references: [id])
+  pages   Page[]
+}
+
+model Page {
+  id        Int     @id @default(autoincrement())
+  releaseId Int
+  release   Release @relation(fields: [releaseId], references: [id])
+  number    Int
+  height    Int
+  weidth    Int
+  s3Key     String
+}
