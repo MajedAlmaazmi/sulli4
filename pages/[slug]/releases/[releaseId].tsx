@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+
 export default function ({ release }) {
-  console.log(release);
   return (
     <div>
       {release.pages.map((page) => {
-        return page.s3Key;
+        return <img src={`https://sulli1.s3.amazonaws.com/${page.s3Key}`} />;
       })}
     </div>
   );
